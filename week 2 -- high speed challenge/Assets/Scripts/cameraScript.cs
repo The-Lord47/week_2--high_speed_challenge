@@ -5,6 +5,8 @@ using UnityEngine;
 public class cameraScript : MonoBehaviour
 {
     public Transform player;
+    private Vector3 offset = new Vector3(0, 8, -9);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -12,8 +14,8 @@ public class cameraScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = player.transform.position + new Vector3(0, 8, -9);
+        transform.position = player.transform.position + offset;
     }
 }

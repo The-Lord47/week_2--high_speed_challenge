@@ -6,6 +6,7 @@ public class npcController : MonoBehaviour
 {
     public float moveSpeed = 10f;
     Rigidbody car;
+    Vector3 relativeForwards;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,7 @@ public class npcController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(moveSpeed * Vector3.forward * Time.deltaTime);
+        relativeForwards = transform.InverseTransformDirection(Vector3.forward);
+        transform.Translate(moveSpeed * -1 *relativeForwards * Time.deltaTime);
     }
 }
