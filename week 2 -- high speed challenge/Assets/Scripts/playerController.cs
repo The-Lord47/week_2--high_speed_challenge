@@ -26,19 +26,20 @@ public class playerController : MonoBehaviour
     //connects to the ui that displays the vehicles current speed
     public TMP_Text currentSpeed_txt;
 
+    public string inputName;
+
     // Start is called before the first frame update
     void Start()
     {
         car = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //sets the acceleration depending on the vertical input
-        acceleration = Input.GetAxis("Vertical");
+        acceleration = Input.GetAxis("Vertical" + inputName);
         //sets the turning depending on the vertical input
-        turning = Input.GetAxis("Horizontal");
+        turning = Input.GetAxis("Horizontal" + inputName);
         //calculates the car's velocity in it's own reference frame
         relativeVelocity = transform.InverseTransformDirection(car.velocity);
         //calculates the car's current speed
@@ -54,16 +55,18 @@ public class playerController : MonoBehaviour
         if (onGround == true && relativeVelocity[2] >= -1)
         {
             //turns the car left and right
-            transform.Rotate(Vector3.up, turnRate * turning * Time.deltaTime);
+            //transform.Rotate(Vector3.up, turnRate * turning * Time.deltaTime);
+            car.AddTorque(Vector3.up * turning * turnRate);
         }
         //only runs if the car is on the ground and has a negative velocity
         else if (onGround == true && relativeVelocity[2] < -1)
         {
             //turns the car left and right, but opposite to the above code (this is used when reversing to make it feel like a car)
-            transform.Rotate(Vector3.up, turnRate * -1 *turning * Time.deltaTime);
+            //transform.Rotate(Vector3.up, turnRate * -1 *turning * Time.deltaTime);
+            car.AddTorque(Vector3.up * turning * -1 * turnRate);
         }
-        
     }
+
     //a function that detects when the car is on the ground
     private void OnTriggerStay(Collider other)
     {

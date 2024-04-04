@@ -11,7 +11,7 @@ public class cameraScript : MonoBehaviour
     //the offset for the third person camera
     private Vector3 TP_offset = new Vector3(0, 8, -9);
     //the offset for the first person camera
-    private Vector3 FP_offset = new Vector3(0, 2.5f, 4);
+    private Vector3 rear_offset = new Vector3(0, 8, 9);
     //a vector that will store the third person camera's current rotation
     private Vector3 currentRotation;
 
@@ -29,11 +29,10 @@ public class cameraScript : MonoBehaviour
         {
             //toggles the camera toggle bool
             cameraToggle = !cameraToggle;
-            //reverses the angle of current rotation
-            //currentRotation *= -1;
-            transform.rotation = new Quaternion(0, 0, 0, 0);
-            //changes the current rotation of the camera by the inverse of what it was to make the camera look "straight ahead"
-            transform.Rotate(currentRotation);
+            //rotates the camera 180 degrees in the y-axis
+            transform.Rotate(0, 180, 0);
+            //bends the camera to look at the car
+            transform.Rotate(2*currentRotation);
         }
     }
 
@@ -50,9 +49,7 @@ public class cameraScript : MonoBehaviour
         else
         {
             //moves the camera to the first person view
-            transform.position = player.transform.position + FP_offset;
-            //new
-            transform.rotation = player.transform.rotation;
+            transform.position = player.transform.position + rear_offset;
         }
     }
 
