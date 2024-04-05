@@ -10,6 +10,7 @@ public class startScreen : MonoBehaviour
     public TMP_Text startScreen_txt;
     public GameObject panel;
     public GameObject panel2;
+    bool breakOut = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,20 +20,25 @@ public class startScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space) == true)
+        if (breakOut == false)
         {
-            startGame = true;
+            if (Input.GetKeyUp(KeyCode.Space) == true)
+            {
+                startGame = true;
+            }
+            if (startGame == false)
+            {
+                Time.timeScale = 0f;
+            }
+            if (startGame == true)
+            {
+                startScreen_txt.enabled = false;
+                panel.SetActive(false);
+                panel2.SetActive(false);
+                Time.timeScale = 1f;
+                breakOut = true;
+            }
         }
-        if (startGame == false)
-        {
-            Time.timeScale = 0f;
-        }
-        if (startGame == true)
-        {
-            startScreen_txt.enabled = false;
-            panel.SetActive(false);
-            panel2.SetActive(false);
-            Time.timeScale = 1f;
-        }
+        
     }
 }
